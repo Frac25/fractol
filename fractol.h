@@ -6,9 +6,10 @@
 #include <stdlib.h>
 #include "minilibx/mlx.h"
 
-#define size_x = 1000;
-#define size_y = 1000;
+#define size_x 1000
+#define size_y 1000
 
+int mandel(int x, int y);
 
 #endif
 
