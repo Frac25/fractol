@@ -7,7 +7,7 @@
 #include "minilibx/mlx.h"
 
 #define SIZE_X 1000
-#define SIZE_Y 1000
+#define SIZE_Y 700
 
 // MOUSE
 # define CLICK_L 1
@@ -24,6 +24,9 @@
 # define RIGHT 124
 # define P 35
 # define M 46
+# define R 15
+# define PLUS 69
+# define MOINS 78
 
 typedef struct s_fractal
 {
@@ -39,16 +42,20 @@ typedef struct s_fractal
 	double	o_x;
 	double	o_y;
 	double	move;
+	int		max_iter;
 
 }	t_fractal;
 
-char	*create_image(t_fractal *frac, char *buffer);
-int		exit_fractol(t_fractal *frac);
+void		create_image(t_fractal *frac);
+int			exit_fractol(t_fractal *frac);
+t_fractal	*init(t_fractal *frac);
+void		init_value(t_fractal *frac);
 
-int		mandel(t_fractal *frac, int x, int y);
+int			julia(t_fractal *frac, int x, int y);
+int			mandel(t_fractal *frac, int x, int y);
 
-int		mouse_hook (int button, int x, int y, t_fractal *param);
-int		key_hook (int button, t_fractal *param);
+int			mouse_hook (int button, int x, int y, t_fractal *param);
+int			key_hook (int button, t_fractal *param);
 
 #endif
 
