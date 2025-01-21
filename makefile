@@ -1,3 +1,5 @@
+//cc fractol.c calc_frac.c -L minilibx -lmlx -framework OpenGL -framework Appkit
+
 NAME = fractol
 
 PROG =	main\
