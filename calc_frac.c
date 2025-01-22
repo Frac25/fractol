@@ -13,7 +13,6 @@ int mandel(t_fractal *frac, int x, int y)
 	zy = 0.0;
 	cx = (frac->o_x + x)/frac->zoom;
 	cy = (frac->o_y + y)/frac->zoom;
-	int color = 0xFCBE11; //
 	i = 0;
 	while (i < frac->max_iter)
 	{
@@ -22,7 +21,7 @@ int mandel(t_fractal *frac, int x, int y)
 		zx = temp;
 		if (zx * zx + zy * zy >= 1000)
 		{
-			return(color * i);
+			return(frac->color * i);
 		}
 		i++;
 	}
@@ -39,25 +38,19 @@ int julia(t_fractal *frac, int x, int y)
 	double cy;
 	double temp;
 
-	zx = x/frac->zoom;
-	zy = y/frac->zoom;
-	cx = (frac->o_x + x)/frac->zoom;
-	cy = (frac->o_y + y)/frac->zoom;
-	int color = 0xFCBE11; //
+	zx = (x + frac->o_x)/frac->zoom;
+	zy = (y + frac->o_y)/frac->zoom;
+	cx = frac->pa;
+	cy = frac->pb;
 	i = 0;
 	while (i < frac->max_iter)
 	{
 		temp = zx * zx - zy * zy + cx;
 		zy = 2. * zx * zy + cy;
 		zx = temp;
-		if (x >= 75 && x <= 85 && y >= 100 && y <= 100)
+		if (zx * zx + zy * zy >= __DBL_MAX__)
 		{
-			printf("i = %d, x = %d, y = %d, zx = %f zy = %f\n ", i, x, y, zx, zy);
-		}
-//		printf("care = %f\n", zx * zx + zy * zy);
-		if (zx * zx + zy * zy >= 1000)
-		{
-			return(color * i);
+			return(frac->color * i);
 		}
 		i++;
 	}

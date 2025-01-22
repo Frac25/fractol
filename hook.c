@@ -47,11 +47,37 @@ int	key_hook (int button, t_fractal *frac)
 		frac->max_iter +=  30;
 	else if (button == M && frac->max_iter >= 35)
 		frac->max_iter -= 30;
-	else if (button == PLUS && frac->max_iter <= 500)
-		frac->zoom *= frac->growth;
-	else if (button == MOINS && frac->max_iter >= 35)
-		frac->zoom /= frac->growth;
+	else
+		key2(button, frac);
+
 	create_image(frac);
 	mlx_put_image_to_window(frac->mlx, frac->window, frac->image, 0, 0);
 	return(0);
+}
+
+void	key2(int button, t_fractal *frac)
+{
+	if (button == PLUS && frac->max_iter <= 500)
+		frac->zoom *= frac->growth;
+	else if (button == MOINS && frac->max_iter >= 35)
+		frac->zoom /= frac->growth;
+	else if (button == N3)
+		frac->pa += frac->p;
+	else if (button == N1)
+		frac->pa -= frac->p;
+	else if (button == N5)
+		frac->pb += frac->p;
+	else if (button == N2)
+		frac->pb -= frac->p;
+//	else if (button == N7)
+//		frac->color += 0x010000*30;
+//	else if (button == N8)
+//		frac->color = 11796480;
+	else if (button == N9)
+		frac->color += 0x000001*30;
+//	else if (button == DIV)
+//		frac->color = 0x000000;
+	else if (button == MULT)
+		frac->color = 0xFCBE11;
+	printf("color = %d\n", frac->color);
 }

@@ -11,12 +11,42 @@ void	create_image(t_fractal *frac)
 		x = 0;
 		while( x <= SIZE_X)
 		{
-			frac->buffer[((y * frac->size_line) + x * 4)/1] = julia(frac, x ,y) ;
+			if(frac->name == JULIA)
+				frac->buffer[((y * frac->size_line) + x * 4)/1] = julia(frac, x, y) ;
+			if(frac->name == MANDEL)
+				frac->buffer[((y * frac->size_line) + x * 4)/1] = mandel(frac, x, y) ;
 			x++;
 		}
 		y++;
 	}
-//	return (buffer);
+}
+
+void	create_image_pixel(t_fractal *frac)
+{
+	int x;
+	int y;
+	int color;
+	int i;
+
+	i = 0;
+	while (i <12)
+	{
+		y = 50 + i*50;
+		while (y <= 100 + i*50)
+		{
+			x = 50 +i*50;
+			while( x <= 100+i*50)
+			{
+				color =  0x010000*30*i;
+				mlx_pixel_put(frac->mlx, frac->window, x, y, color);
+
+				x++;
+			}
+			y++;
+		}
+	printf("i = %d, color = %d\n", i, color);
+	i++;
+	}
 }
 
 int exit_fractol(t_fractal *frac)
@@ -29,44 +59,27 @@ int exit_fractol(t_fractal *frac)
 	return (0);
 }
 
-t_fractal	*init(t_fractal *frac)
+void	error(void)
 {
-	frac = malloc(sizeof(t_fractal));
-	// a proteger et leaks
-	frac->mlx = mlx_init ();
-	frac->window = mlx_new_window(frac->mlx, SIZE_X, SIZE_Y, "fractol");
-	frac->image = mlx_new_image(frac->mlx, SIZE_X, SIZE_Y);
-	frac->bits_per_pixel = 32;
-	frac->size_line = SIZE_X * frac->bits_per_pixel;
-	frac->endian = 0;
-	frac ->buffer = mlx_get_data_addr(frac->image, &frac->bits_per_pixel, &frac->size_line, &frac->endian);
-	return (frac);
+	ft_putendl_fd("entrez un des 2 parametres : julia ou mandel", 1);
+	exit(EXIT_FAILURE);
 }
 
-void init_value(t_fractal *frac)
-{
-	frac->zoom = 250;
-	frac->growth = 1.1;
-//	frac->o_x = -700;
-//	frac->o_y = -400;
-	frac->o_x = -200;
-	frac->o_y = 5;
-	frac->move = 50;
-	frac->max_iter = 50;
-}
-
-int main(void)
+int main(int argc, char **argv)
 {
 	t_fractal	*frac;
 
 	frac = NULL;
-	frac = init(frac);
+	frac = init(frac, argc, argv);
 	init_value(frac);
 	create_image(frac);
 	mlx_mouse_hook(frac->window, mouse_hook, frac);
 	mlx_key_hook(frac->window, key_hook, frac);
 	mlx_hook(frac->window, 17, 0L, exit_fractol, frac);
 	mlx_put_image_to_window(frac->mlx, frac->window, frac->image, 0, 0);
+
+	create_image_pixel(frac);
+
 	mlx_loop(frac->mlx);
 	return(0);
 }
