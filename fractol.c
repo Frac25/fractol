@@ -1,58 +1,9 @@
 #include "fractol.h"
 
-void	create_image(t_fractal *frac)
-{
-	int x;
-	int y;
-
-	y = 0;
-	while (y <= SIZE_Y - 1)
-	{
-		x = 0;
-		while( x <= SIZE_X)
-		{
-			if(frac->name == JULIA)
-				frac->buffer[((y * frac->size_line) + x * 4)/1] = julia(frac, x, y) ;
-			if(frac->name == MANDEL)
-				frac->buffer[((y * frac->size_line) + x * 4)/1] = mandel(frac, x, y) ;
-			x++;
-		}
-		y++;
-	}
-}
-
-void	create_image_pixel(t_fractal *frac)
-{
-	int x;
-	int y;
-	int color;
-	int i;
-
-	i = 0;
-	while (i <12)
-	{
-		y = 50 + i*50;
-		while (y <= 100 + i*50)
-		{
-			x = 50 +i*50;
-			while( x <= 100+i*50)
-			{
-				color =  0x010000*30*i;
-				mlx_pixel_put(frac->mlx, frac->window, x, y, color);
-
-				x++;
-			}
-			y++;
-		}
-	printf("i = %d, color = %d\n", i, color);
-	i++;
-	}
-}
-
-int exit_fractol(t_fractal *frac)
+int	exit_fractol(t_fractal *frac)
 {
 	mlx_destroy_image(frac->mlx, frac->image);
-//	mlx_destroy_window(frac->mlx, frac->image);
+	mlx_destroy_window(frac->mlx, frac->window);
 	free(frac->mlx);
 	free(frac);
 	exit(EXIT_SUCCESS);
@@ -61,25 +12,39 @@ int exit_fractol(t_fractal *frac)
 
 void	error(void)
 {
-	ft_putendl_fd("entrez un des 2 parametres : julia ou mandel", 1);
+	ft_putendl_fd("entrez un des 3 parametres : julia, mandel, ship", 1);
 	exit(EXIT_FAILURE);
 }
 
-int main(int argc, char **argv)
+void	display(t_fractal *frac)
+{
+	char	*zoom_char;
+	char	*max_iter_char;
+
+	zoom_char = ft_itoa(frac->zoom);
+	max_iter_char = ft_itoa(frac->max_iter);
+
+	create_image(frac);
+	mlx_put_image_to_window(frac->mlx, frac->window, frac->image, 0, 0);
+	print_logo(frac);
+	create_image_pixel(frac);
+	mlx_string_put(frac->mlx, frac->window, 10, 150, 0x00FF0000, "zoom (+/-) : ");
+	mlx_string_put(frac->mlx, frac->window, 100, 150, 0x00FF0000, zoom_char);
+	mlx_string_put(frac->mlx, frac->window, 10, 170, 0x0000FF00, "iteration (P/M) : ");
+	mlx_string_put(frac->mlx, frac->window, 135, 170, 0x0000FF00, max_iter_char);
+}
+
+int	main(int argc, char **argv)
 {
 	t_fractal	*frac;
 
 	frac = NULL;
 	frac = init(frac, argc, argv);
 	init_value(frac);
-	create_image(frac);
 	mlx_mouse_hook(frac->window, mouse_hook, frac);
 	mlx_key_hook(frac->window, key_hook, frac);
 	mlx_hook(frac->window, 17, 0L, exit_fractol, frac);
-	mlx_put_image_to_window(frac->mlx, frac->window, frac->image, 0, 0);
-
-	create_image_pixel(frac);
-
+	display(frac);
 	mlx_loop(frac->mlx);
-	return(0);
+	return (0);
 }

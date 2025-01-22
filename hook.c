@@ -1,31 +1,22 @@
-# include "fractol.h"
+#include "fractol.h"
 
 int	mouse_hook (int button, int x, int y, t_fractal *frac)
 {
-	printf("touche : %d  x = %d  y = %d\n", button, x, y);
-
-	if (button == SCROLL_UP)
+//	printf("touche : %d  x = %d  y = %d\n", button, x, y);
+	if (button == SCROLL_UP || button == CLICK_L)
 	{
-		frac->zoom = frac->zoom * frac->growth;
-		frac->o_x = frac->o_x - (SIZE_X/2 - x)*frac->growth;
-		frac->o_y = frac->o_y - (SIZE_Y/2 - y)*frac->growth;
+		frac->zoom *= frac->growth;
+		frac->o_x = (frac->o_x - (SIZE_X/2 - x))*frac->growth;
+		frac->o_y = (frac->o_y - (SIZE_Y/2 - y))*frac->growth;
 	}
-	else if (button == SCROLL_DOWN)
+	else if (button == SCROLL_DOWN || button == CLICK_R)
 	{
-		frac->zoom = frac->zoom / frac->growth;
+		frac->zoom /= frac->growth;
 		frac->o_x = frac->o_x - (SIZE_X/2 - x)/frac->growth;
 		frac->o_y = frac->o_y - (SIZE_Y/2 - y)/frac->growth;
 	}
-		else if (button == CLICK_L)
-	{
-	//	frac->zoom = frac->zoom * frac->growth;
-		frac->o_x = frac->o_x - (SIZE_X/2 - x);
-		frac->o_y = frac->o_y - (SIZE_Y/2 - y);
-	}
-	create_image(frac);
-	mlx_put_image_to_window(frac->mlx, frac->window, frac->image, 0, 0);
-
-	return(0);
+	display(frac);
+	return (0);
 }
 
 int	key_hook (int button, t_fractal *frac)
@@ -49,10 +40,8 @@ int	key_hook (int button, t_fractal *frac)
 		frac->max_iter -= 30;
 	else
 		key2(button, frac);
-
-	create_image(frac);
-	mlx_put_image_to_window(frac->mlx, frac->window, frac->image, 0, 0);
-	return(0);
+	display(frac);
+	return (0);
 }
 
 void	key2(int button, t_fractal *frac)
@@ -69,15 +58,14 @@ void	key2(int button, t_fractal *frac)
 		frac->pb += frac->p;
 	else if (button == N2)
 		frac->pb -= frac->p;
-//	else if (button == N7)
-//		frac->color += 0x010000*30;
-//	else if (button == N8)
-//		frac->color = 11796480;
+	else if (button == N7)
+		frac->color += 1;
+	else if (button == N8)
+		frac->color += 10;
 	else if (button == N9)
-		frac->color += 0x000001*30;
-//	else if (button == DIV)
-//		frac->color = 0x000000;
+		frac->color += 255;
+	else if (button == DIV)
+		frac->color = 0x000000;
 	else if (button == MULT)
 		frac->color = 0xFCBE11;
-	printf("color = %d\n", frac->color);
 }

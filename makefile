@@ -1,8 +1,13 @@
-//cc fractol.c calc_frac.c -L minilibx -lmlx -framework OpenGL -framework Appkit
-
+//cc fractol.c calc_frac.c hook.c utils.c init.c display.c -L minilibx -lmlx -framework OpenGL -framework Appkit -lz
 NAME = fractol
 
-PROG =	main\
+PROG =	calc_frac\
+		fractol\
+		hook\
+		init\
+		display\
+		utils\
+
 
 SRC = $(addsuffix .c, $(PROG))
 
@@ -11,6 +16,8 @@ OBJ = $(addsuffix .o, $(PROG))
 CC = cc
 
 CFLAGS = -Wall -Wextra -Werror
+
+CFLAGS_2 = -L minilibx -lmlx -framework OpenGL -framework Appkit -lz
 
 all  :		$(NAME)
 

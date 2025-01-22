@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include "minilibx/mlx.h"
+#include <math.h>
 
 #define SIZE_X 1000
 #define SIZE_Y 700
@@ -42,6 +43,7 @@ typedef enum name
 	OTHER,
 	JULIA,
 	MANDEL,
+	SHIP,
 }	t_name;
 
 typedef struct s_fractal
@@ -59,6 +61,8 @@ typedef struct s_fractal
 	double	p;
 	double	zoom;
 	double	growth;
+	double	cx;
+	double	cy;
 	double	o_x;
 	double	o_y;
 	double	move;
@@ -67,13 +71,20 @@ typedef struct s_fractal
 
 }	t_fractal;
 
-void		create_image(t_fractal *frac);
+void		display(t_fractal *frac);
 int			exit_fractol(t_fractal *frac);
 void		error(void);
 
+t_fractal	*init(t_fractal *frac, int argc, char** argv);
+void		init_value(t_fractal *frac);
+
+void		create_image(t_fractal *frac);
+void		print_logo(t_fractal *frac);
+void		create_image_pixel(t_fractal *frac);
 
 int			julia(t_fractal *frac, int x, int y);
 int			mandel(t_fractal *frac, int x, int y);
+int			ship(t_fractal *frac, int x, int y);
 
 int			mouse_hook (int button, int x, int y, t_fractal *param);
 int			key_hook (int button, t_fractal *param);
@@ -81,11 +92,6 @@ void		key2(int button, t_fractal *frac);
 
 void		ft_putendl_fd(char *s, int fd);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
-t_fractal	*init(t_fractal *frac, int argc, char** argv);
-void		init_value(t_fractal *frac);
-
+char		*ft_itoa(int n);
 
 #endif
-
-
-//man usr/share/man/man3/mlx.1

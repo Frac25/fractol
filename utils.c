@@ -32,53 +32,54 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	return (t1[i] - t2[i]);
 }
 
-t_fractal *init(t_fractal *frac, int argc, char** argv)
+int	ft_nbdigit(int n)
 {
-	if(argc <= 1)
-		error();
-	frac = malloc(sizeof(t_fractal));// a proteger et leaks
-	frac->name = OTHER;
-	if(ft_strncmp(argv[1], "julia", 6) == 0)
-		frac->name = JULIA;
-	if(ft_strncmp(argv[1], "mandel", 7) == 0)
-		frac->name = MANDEL;
-	if(frac->name == OTHER)
+	int				i;
+	unsigned int	m;
+
+	i = 0;
+	if (n < 0)
 	{
-		free(frac);
-		error();
+		m = -n;
+		i++;
 	}
-	frac->mlx = mlx_init ();
-	frac->window = mlx_new_window(frac->mlx, SIZE_X, SIZE_Y, "fractol");
-	frac->image = mlx_new_image(frac->mlx, SIZE_X, SIZE_Y);
-	frac->bits_per_pixel = 32;
-	frac->size_line = SIZE_X * frac->bits_per_pixel;
-	frac->endian = 0;
-	frac ->buffer = mlx_get_data_addr(frac->image, &frac->bits_per_pixel, &frac->size_line, &frac->endian);
-	return (frac);
+	else
+		m = n;
+	if (m == 0)
+		i++;
+	while (m > 0)
+	{
+		m = m / 10;
+		i++;
+	}
+	return (i);
 }
 
-void init_value(t_fractal *frac)
+char	*ft_itoa(int n)
 {
-	frac->color = 0xFCBE11; //0xFCBE11
-	frac->zoom = 250;
-	frac->growth = 1.1;
-	frac->max_iter = 50;
-	if(frac->name == MANDEL)
+	char			*s;
+	int				i;
+	int				neg;
+	unsigned int	m;
+
+	i = ft_nbdigit(n);
+	neg = 0;
+	s = malloc(sizeof(char) * (ft_nbdigit(n)) + 1);
+	if (s == NULL)
+		return (NULL);
+	if (n < 0)
 	{
-		frac->o_x = -700;
-		frac->o_y = -400;
-		frac->move = 50;
-		frac->p = 0;
-		frac->pa = 0;
-		frac->pb = 0;
+		neg = 1;
+		s[0] = '-';
+		m = -n;
 	}
-	if(frac->name == JULIA)
+	else
+		m = n;
+	s[i--] = '\0';
+	while (i >= neg)
 	{
-		frac->o_x = -550;
-		frac->o_y = -375;
-		frac->move = 100;
-		frac->p = 0.05;
-		frac->pa = -0.16;
-		frac->pb = 0.88;
+		s[i--] = (m % 10) + 48;
+		m = m / 10;
 	}
+	return (s);
 }
