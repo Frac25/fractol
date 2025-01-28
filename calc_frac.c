@@ -1,16 +1,28 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   calc_frac.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sydubois <sydubois@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/28 12:17:42 by sydubois          #+#    #+#             */
+/*   Updated: 2025/01/28 12:19:57 by sydubois         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fractol.h"
 
 int	mandel(t_fractal *frac, int x, int y)
 {
-	int	i;
+	int		i;
 	double	zx;
 	double	zy;
 	double	temp;
 
 	zx = 0.0;
 	zy = 0.0;
-	frac->cx = (frac->o_x + x)/frac->zoom;
-	frac->cy = (frac->o_y + y)/frac->zoom;
+	frac->cx = (frac->o_x + x) / frac->zoom;
+	frac->cy = (frac->o_y + y) / frac->zoom;
 	i = 0;
 	while (i < frac->max_iter)
 	{
@@ -19,23 +31,22 @@ int	mandel(t_fractal *frac, int x, int y)
 		zx = temp;
 		if (zx * zx + zy * zy >= 1000)
 		{
-			return(frac->color + ((i % 255) * 10));
+			return (frac->color + ((i % 255) * 10));
 		}
 		i++;
 	}
-	return(0);
+	return (0);
 }
-
 
 int	julia(t_fractal *frac, int x, int y)
 {
-	int	i;
+	int		i;
 	double	zx;
 	double	zy;
 	double	temp;
 
-	zx = (x + frac->o_x)/frac->zoom;
-	zy = (y + frac->o_y)/frac->zoom;
+	zx = (x + frac->o_x) / frac->zoom;
+	zy = (y + frac->o_y) / frac->zoom;
 	frac->cx = frac->pa;
 	frac->cy = frac->pb;
 	i = 0;
@@ -46,16 +57,16 @@ int	julia(t_fractal *frac, int x, int y)
 		zx = temp;
 		if (zx * zx + zy * zy >= __DBL_MAX__)
 		{
-			return(frac->color + ((i % 255) * 10));
+			return (frac->color + ((i % 255) * 10));
 		}
 		i++;
 	}
-	return(0);
+	return (0);
 }
 
 int	ship(t_fractal *frac, int x, int y)
 {
-	int	i;
+	int		i;
 	double	zx;
 	double	zy;
 	double	temp;
@@ -72,9 +83,9 @@ int	ship(t_fractal *frac, int x, int y)
 		zx = fabs(temp);
 		if (zx * zx + zy * zy >= __DBL_MAX__)
 		{
-			return(frac->color + ((i % 255) * 10));
+			return (frac->color + ((i % 255) * 10));
 		}
 		i++;
 	}
-	return(0);
+	return (0);
 }

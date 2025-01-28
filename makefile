@@ -1,11 +1,10 @@
-//cc fractol.c calc_frac.c hook.c utils.c init.c display.c -L minilibx -lmlx -framework OpenGL -framework Appkit -lz
 NAME = fractol
 
 PROG =	calc_frac\
+		display\
 		fractol\
 		hook\
 		init\
-		display\
 		utils\
 
 
@@ -17,23 +16,22 @@ CC = cc
 
 CFLAGS = -Wall -Wextra -Werror
 
-CFLAGS_2 = -L minilibx -lmlx -framework OpenGL -framework Appkit -lz
+CFLAGS_2 = -L minilibx -l mlx -framework OpenGL -framework Appkit -lz
 
-all  :		$(NAME)
+all:		$(NAME)
 
-$(NAME) :	$(OBJ)
-//			ar rcs $(NAME) $(OBJ)
-			$(CC) $(OBJ) -o $(NAME)
+$(NAME):	$(OBJ)
+			$(CC) $(OBJ) $(CFLAGS) $(CFLAGS_2) -o $(NAME)
 
-%.o :		%.c
+%.o:		%.c
 			$(CC) -c $< $(CFLAGS) -o $@
 
-clean :
+clean:
 			rm -f $(OBJ)
 
-fclean : 	clean
+fclean:		clean
 			rm -f $(NAME)
 
-re : 		fclean all
+re:			fclean all
 
-.PHONY : 	all clean fclean re
+.PHONY:		all clean fclean re

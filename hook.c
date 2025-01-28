@@ -1,27 +1,37 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   hook.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sydubois <sydubois@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/28 12:39:39 by sydubois          #+#    #+#             */
+/*   Updated: 2025/01/28 14:20:46 by sydubois         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fractol.h"
 
-int	mouse_hook (int button, int x, int y, t_fractal *frac)
+int	mouse_hook(int button, int x, int y, t_fractal *frac)
 {
-//	printf("touche : %d  x = %d  y = %d\n", button, x, y);
 	if (button == SCROLL_UP || button == CLICK_L)
 	{
 		frac->zoom *= frac->growth;
-		frac->o_x = (frac->o_x - (SIZE_X/2 - x))*frac->growth;
-		frac->o_y = (frac->o_y - (SIZE_Y/2 - y))*frac->growth;
+		frac->o_x = (frac->o_x - (SIZE_X / 2 - x)) * frac->growth;
+		frac->o_y = (frac->o_y - (SIZE_Y / 2 - y)) * frac->growth;
 	}
 	else if (button == SCROLL_DOWN || button == CLICK_R)
 	{
 		frac->zoom /= frac->growth;
-		frac->o_x = frac->o_x - (SIZE_X/2 - x)/frac->growth;
-		frac->o_y = frac->o_y - (SIZE_Y/2 - y)/frac->growth;
+		frac->o_x = frac->o_x - (SIZE_X / 2 - x) / frac->growth;
+		frac->o_y = frac->o_y - (SIZE_Y / 2 - y) / frac->growth;
 	}
 	display(frac);
 	return (0);
 }
 
-int	key_hook (int button, t_fractal *frac)
+int	key_hook(int button, t_fractal *frac)
 {
-	printf("touche : %d\n", button);
 	if (button == ESC)
 		exit_fractol(frac);
 	else if (button == LEFT)
@@ -35,7 +45,7 @@ int	key_hook (int button, t_fractal *frac)
 	else if (button == R)
 		init_value(frac);
 	else if (button == P && frac->max_iter <= 500)
-		frac->max_iter +=  30;
+		frac->max_iter += 30;
 	else if (button == M && frac->max_iter >= 35)
 		frac->max_iter -= 30;
 	else

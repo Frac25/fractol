@@ -1,14 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fractol.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sydubois <sydubois@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/28 12:37:00 by sydubois          #+#    #+#             */
+/*   Updated: 2025/01/28 12:38:35 by sydubois         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FRACTOL_H
 # define FRACTOL_H
 
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include "minilibx/mlx.h"
-#include <math.h>
+# include <stdio.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include "minilibx/mlx.h"
+# include <math.h>
 
-#define SIZE_X 1000
-#define SIZE_Y 700
+# define SIZE_X 1000
+# define SIZE_Y 700
 
 // MOUSE
 # define CLICK_L 1
@@ -51,8 +63,8 @@ typedef struct s_fractal
 	void	*mlx;
 	void	*window;
 	void	*image;
-	int		size_line;
-	int		bits_per_pixel;
+	int		s_l;
+	int		bpp;
 	int		endian;
 	char	*buffer;
 	t_name	name;
@@ -75,7 +87,7 @@ void		display(t_fractal *frac);
 int			exit_fractol(t_fractal *frac);
 void		error(void);
 
-t_fractal	*init(t_fractal *frac, int argc, char** argv);
+t_fractal	*init(t_fractal *frac, int argc, char **argv);
 void		init_value(t_fractal *frac);
 
 void		create_image(t_fractal *frac);
@@ -86,8 +98,8 @@ int			julia(t_fractal *frac, int x, int y);
 int			mandel(t_fractal *frac, int x, int y);
 int			ship(t_fractal *frac, int x, int y);
 
-int			mouse_hook (int button, int x, int y, t_fractal *param);
-int			key_hook (int button, t_fractal *param);
+int			mouse_hook(int button, int x, int y, t_fractal *param);
+int			key_hook(int button, t_fractal *param);
 void		key2(int button, t_fractal *frac);
 
 void		ft_putendl_fd(char *s, int fd);

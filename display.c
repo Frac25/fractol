@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   display.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sydubois <sydubois@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/28 12:20:10 by sydubois          #+#    #+#             */
+/*   Updated: 2025/01/28 12:29:49 by sydubois         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fractol.h"
 
-void	create_image(t_fractal *frac)
+void	create_image(t_fractal *f)
 {
 	int	x;
 	int	y;
@@ -9,14 +21,14 @@ void	create_image(t_fractal *frac)
 	while (y <= SIZE_Y - 1)
 	{
 		x = 0;
-		while ( x <= SIZE_X)
+		while (x <= SIZE_X)
 		{
-			if (frac->name == JULIA)
-				frac->buffer[((y * frac->size_line) + x * frac->bits_per_pixel / 8)] = julia(frac, x, y);
-			if (frac->name == MANDEL)
-				frac->buffer[((y * frac->size_line) + x * frac->bits_per_pixel / 8)] = mandel(frac, x, y);
-			if (frac->name == SHIP)
-				frac->buffer[((y * frac->size_line) + x * frac->bits_per_pixel / 8)] = ship(frac, x, y);
+			if (f->name == JULIA)
+				f->buffer[((y * f->s_l) + x * f->bpp / 8)] = julia(f, x, y);
+			if (f->name == MANDEL)
+				f->buffer[((y * f->s_l) + x * f->bpp / 8)] = mandel(f, x, y);
+			if (f->name == SHIP)
+				f->buffer[((y * f->s_l) + x * f->bpp / 8)] = ship(f, x, y);
 			x++;
 		}
 		y++;
@@ -37,9 +49,9 @@ void	create_image_pixel(t_fractal *frac)
 		while (y <= 125)
 		{
 			x = 10 + i * 10;
-			while ( x <= 20 + i * 10 )
+			while (x <= 20 + i * 10)
 			{
-				color =  0x010000*20 * i;
+				color = 0x010000 * 20 * i;
 				mlx_pixel_put(frac->mlx, frac->window, x, y, color);
 				x++;
 			}

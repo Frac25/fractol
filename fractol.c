@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fractol.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sydubois <sydubois@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/28 12:31:49 by sydubois          #+#    #+#             */
+/*   Updated: 2025/01/28 15:16:54 by sydubois         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fractol.h"
 
 int	exit_fractol(t_fractal *frac)
@@ -5,6 +17,9 @@ int	exit_fractol(t_fractal *frac)
 	mlx_destroy_image(frac->mlx, frac->image);
 	mlx_destroy_window(frac->mlx, frac->window);
 	free(frac->mlx);
+//	free(frac->buffer); // attention ne pas maolloc, dejas fait.
+//	free(frac->window);
+//	free(frac->image);
 	free(frac);
 	exit(EXIT_SUCCESS);
 	return (0);
@@ -18,20 +33,22 @@ void	error(void)
 
 void	display(t_fractal *frac)
 {
-	char	*zoom_char;
-	char	*max_iter_char;
-
-	zoom_char = ft_itoa(frac->zoom);
-	max_iter_char = ft_itoa(frac->max_iter);
-
+//	char	*zoom_char;
+//	char	*max;
+	
+//		zoom_char = ft_itoa(frac->zoom);
+//	max = ft_itoa(frac->max_iter);
 	create_image(frac);
 	mlx_put_image_to_window(frac->mlx, frac->window, frac->image, 0, 0);
-	print_logo(frac);
-	create_image_pixel(frac);
-	mlx_string_put(frac->mlx, frac->window, 10, 150, 0x00FF0000, "zoom (+/-) : ");
-	mlx_string_put(frac->mlx, frac->window, 100, 150, 0x00FF0000, zoom_char);
-	mlx_string_put(frac->mlx, frac->window, 10, 170, 0x0000FF00, "iteration (P/M) : ");
-	mlx_string_put(frac->mlx, frac->window, 135, 170, 0x0000FF00, max_iter_char);
+//	print_logo(frac);
+//	create_image_pixel(frac);
+//	mlx_string_put(frac->mlx, frac->window, 10, 150, 0x00FF0000, "zoom(+/-):");
+//	mlx_string_put(frac->mlx, frac->window, 100, 150, 0x00FF0000, zoom_char);
+//	mlx_string_put(frac->mlx, frac->window, 10, 170, 0x0000FF00, "iter(P/M):");
+//	mlx_string_put(frac->mlx, frac->window, 100, 170, 0x0000FF00, max);
+//	free(zoom_char);
+//	free(max);
+
 }
 
 int	main(int argc, char **argv)
@@ -45,6 +62,10 @@ int	main(int argc, char **argv)
 	mlx_key_hook(frac->window, key_hook, frac);
 	mlx_hook(frac->window, 17, 0L, exit_fractol, frac);
 	display(frac);
+//	write(1,"start",5);
 	mlx_loop(frac->mlx);
+//	free(frac->buffer);
+//	free(frac);
+//	write(1,"end",3);
 	return (0);
 }
