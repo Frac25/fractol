@@ -6,36 +6,40 @@
 /*   By: sydubois <sydubois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 12:40:41 by sydubois          #+#    #+#             */
-/*   Updated: 2025/01/28 15:34:20 by sydubois         ###   ########.fr       */
+/*   Updated: 2025/01/29 17:56:10 by sydubois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"fractol.h"
 
-t_fractal	*init(t_fractal *f, int argc, char **argv)
+t_fractal	*init(int argc, char **argv)
 {
+	t_fractal	*f;
+
+	f = NULL;
 	if (argc <= 1)
 		error();
-	f = malloc(sizeof(t_fractal));
+	f = malloc(sizeof(t_fractal) + 1000000);
 	f->name = OTHER;
 	write(1, argv[1], 3);
-//	if (ft_strncmp(argv[1], "julia", 6) == 0)
-//		f->name = JULIA;
-//	if (ft_strncmp(argv[1], "mandel", 7) == 0)
-//		f->name = MANDEL;
-//	if (ft_strncmp(argv[1], "ship", 5) == 0)
+	write(1, ".\n\n", 3);
+	if (ft_strncmp(argv[1], "julia", 6) == 0)
+		f->name = JULIA;
+	if (ft_strncmp(argv[1], "mandel", 7) == 0)
+		f->name = MANDEL;
+	if (ft_strncmp(argv[1], "ship", 5) == 0)
 		f->name = SHIP;
-//	if (f->name == OTHER)
-//	{
-//		free(f);
-//		error();
-//	}
+	if (f->name == OTHER)
+	{
+		free(f);
+		error();
+	}
 	f->mlx = mlx_init ();
 	f->window = mlx_new_window(f->mlx, SIZE_X, SIZE_Y, "fractol");
 	f->image = mlx_new_image(f->mlx, SIZE_X, SIZE_Y);
-//	f->bpp = 32;
-//	f->s_l = SIZE_X * f->bpp;
-//	f->endian = 0;
+	f->bpp = 32;
+	f->s_l = SIZE_X * f->bpp;
+	f->endian = 0;
 	f ->buffer = mlx_get_data_addr(f->image, &f->bpp, &f->s_l, &f->endian);
 	return (f);
 }

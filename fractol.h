@@ -6,7 +6,7 @@
 /*   By: sydubois <sydubois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 12:37:00 by sydubois          #+#    #+#             */
-/*   Updated: 2025/01/28 12:38:35 by sydubois         ###   ########.fr       */
+/*   Updated: 2025/01/29 17:24:41 by sydubois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void		display(t_fractal *frac);
 int			exit_fractol(t_fractal *frac);
 void		error(void);
 
-t_fractal	*init(t_fractal *frac, int argc, char **argv);
+t_fractal	*init(int argc, char **argv);
 void		init_value(t_fractal *frac);
 
 void		create_image(t_fractal *frac);
