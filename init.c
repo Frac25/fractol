@@ -6,7 +6,7 @@
 /*   By: sydubois <sydubois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 12:40:41 by sydubois          #+#    #+#             */
-/*   Updated: 2025/01/29 17:56:10 by sydubois         ###   ########.fr       */
+/*   Updated: 2025/01/30 09:43:18 by sydubois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,10 @@ t_fractal	*init(int argc, char **argv)
 {
 	t_fractal	*f;
 
-	f = NULL;
 	if (argc <= 1)
 		error();
-	f = malloc(sizeof(t_fractal) + 1000000);
+	f = malloc(sizeof(t_fractal));
 	f->name = OTHER;
-	write(1, argv[1], 3);
-	write(1, ".\n\n", 3);
 	if (ft_strncmp(argv[1], "julia", 6) == 0)
 		f->name = JULIA;
 	if (ft_strncmp(argv[1], "mandel", 7) == 0)
