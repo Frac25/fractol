@@ -29,7 +29,7 @@ int	mandel(t_fractal *frac, int x, int y)
 		temp = zx * zx - zy * zy + frac->cx;
 		zy = 2. * zx * zy + frac->cy;
 		zx = temp;
-		if (zx * zx + zy * zy >= 1000)
+		if (zx * zx + zy * zy >= __DBL_MAX__)
 		{
 			return (frac->color + ((i % 255) * 10));
 		}
